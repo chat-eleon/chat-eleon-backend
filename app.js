@@ -8,6 +8,9 @@ const cors = require('cors');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/chat_eleon');
 
 var app = express();
 
