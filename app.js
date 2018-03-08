@@ -8,6 +8,7 @@ const cors = require('cors');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var messages = require('./routes/messages');
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/chat_eleon');
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/messages', messages);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,8 +46,9 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(err.status || 500).json({
+    "message": err.message
+  });
 });
 
 module.exports = app;

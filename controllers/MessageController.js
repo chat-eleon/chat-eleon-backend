@@ -1,13 +1,14 @@
 const Message = require('../models/message');
 module.exports = {
   index : (req,res) => {
-    const grupId = req.params.grupId;
-    Book.find({
+    const grupId = req.params.id;
+    Message.find({
       grup: grupId
     }).exec((err,data) => {
       if (err) {
         return res.status(500).json({
-          message: "Something Went Wrong"
+          message: "Something Went Wrong",
+          err
         });
       }
       return res.status(200).json({
