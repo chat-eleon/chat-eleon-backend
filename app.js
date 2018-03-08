@@ -9,6 +9,7 @@ const cors = require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var messages = require('./routes/messages');
+var groups = require('./routes/groups')
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/chat_eleon');
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/api/groups',groups)
 app.use('/api/messages', messages);
 
 // catch 404 and forward to error handler
