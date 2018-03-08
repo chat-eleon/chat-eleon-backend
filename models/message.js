@@ -3,13 +3,15 @@ const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
   member: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    type: String
+    // type: Schema.Types.ObjectId,
+    // ref: 'User'
   } ,
   text: String,
   grup: {
-    type: Schema.Types.ObjectId,
-    ref: 'Grup'
+    type: String
+    // type: Schema.Types.ObjectId,
+    // ref: 'Grup'
   },
   createdAt: {
     type: Date,
