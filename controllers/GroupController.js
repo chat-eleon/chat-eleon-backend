@@ -4,8 +4,10 @@ class Groups {
 
     static viewGroup(req,res){
         groupSchema.find()
+        .populate('userid')
         .exec()
         .then(groupData=>{
+          console.log(groupData)
           res.status(200).json(groupData)
         }).catch(err=>{
           res.status(500).json({
@@ -18,7 +20,8 @@ class Groups {
       static addGroups(req,res){
         let objCreate = {
          title:req.body.title,
-         language:req.body.language
+         language:req.body.language,
+         userid : req.body.userid
         } 
         groupSchema.create(objCreate)
         .then((data)=>{
