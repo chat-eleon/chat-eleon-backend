@@ -47,7 +47,7 @@ module.exports = {
         })
       });
     } else {
-      translate(req.body.text, {to: 'ja'}).then(response => {
+      translate(req.body.text, {to: req.body.language}).then(response => {
         let message = new Message({
           text: response.text,
           user: req.body.user,
@@ -71,21 +71,24 @@ module.exports = {
   },
   update: (req,res) => {
     const id = req.params.id;
-    const input = {
-      text: req.body.text
-    }
-    Message.findOneAndUpdate({ _id : id},input,{new: true},(err,data) => {
-      if (err) {
-        return res.status(500).json({
-          message: "Something Went Wrong"
-        });
+    translate(req.body.text, {to: req.body.language}).then(response => {
+      const input = {
+        text: response.text
       }
-      return res.status(200).json({
-        message: 'Success Update Message',
-        data
+      Message.findOneAndUpdate({ _id : id},input,{new: true},(err,data) => {
+        if (err) {
+          return res.status(500).json({
+            message: "Something Went Wrong"
+          });
+        }
+        return res.status(200).json({
+          message: 'Success Update Message',
+          data
+        });
       });
+    }).catch(err => {
+        console.error(err);
     });
-
   },
   destroy: (req,res) => {
     const id = req.params.id;
