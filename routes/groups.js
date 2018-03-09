@@ -4,7 +4,7 @@ var Groups = require('../controllers/GroupController')
 
 /* GET users listing. */
 router.get('/',Groups.viewGroup)
-router.post('/',Groups.addGroups)
-router.post('/',Groups.updateGroups)
-router.delete('/',Groups.deleteGroups)
+router.post('/add',Groups.addGroups)
+router.post('/update',Groups.updateGroups)
+router.delete('/delete',Groups.deleteGroups)
 module.exports = router;
