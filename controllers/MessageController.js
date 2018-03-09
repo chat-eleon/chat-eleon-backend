@@ -7,7 +7,8 @@ module.exports = {
     const grupId = req.params.id;
     Message.find({
       grup: grupId
-    }).exec((err,data) => {
+    }).populate('user')
+    .exec((err,data) => {
       if (err) {
         return res.status(500).json({
           message: "Something Went Wrong",
@@ -38,13 +39,15 @@ module.exports = {
         grup: req.body.grup
       });
       message.save((err,data) => {
-        if (err) return res.status(500).json({
-          message: "Something Went Wrong, Failed Create Message"
-        })
-        return res.status(200).json({
-          message: "Success Create Message",
-          data
-        })
+        Message.findOne({_id: data._id}).populate('user').exec().then((user) => {
+          if (err) return res.status(500).json({
+            message: "Something Went Wrong, Failed Create Message"
+          })
+          return res.status(200).json({
+            message: "Success Create Message",
+            data: user
+          });
+        });
       });
     } else {
       translate(req.body.text, {to: req.body.language}).then(response => {
@@ -54,13 +57,15 @@ module.exports = {
           grup: req.body.grup
         });
         message.save((err,data) => {
-          if (err) return res.status(500).json({
-            message: "Something Went Wrong, Failed Create Message"
-          })
-          return res.status(200).json({
-            message: "Success Create Message",
-            data
-          })
+          Message.findOne({_id: data._id}).populate('user').exec().then((user) => {
+            if (err) return res.status(500).json({
+              message: "Something Went Wrong, Failed Create Message"
+            })
+            return res.status(200).json({
+              message: "Success Create Message",
+              data: user
+            });
+          });
         });
 
       }).catch(err => {
