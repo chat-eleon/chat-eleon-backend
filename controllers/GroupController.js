@@ -4,8 +4,10 @@ class Groups {
 
     static viewGroup(req,res){
         groupSchema.find()
+        .populate('user')
         .exec()
         .then(groupData=>{
+          console.log(groupDatan)
           res.status(200).json(groupData)
         }).catch(err=>{
           res.status(500).json({

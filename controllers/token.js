@@ -6,9 +6,11 @@ class TokenController {
   static tokenToClient(req, res){
 
 
-    User.find({email: req.response.email})
+    User.findOne({email: req.response.email})
       .exec()
       .then(foundUser => {
+        console.log(foundUser);
+        
         if (foundUser) {
           let data = {
             token:req.token,
