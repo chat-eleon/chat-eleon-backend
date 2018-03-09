@@ -4,11 +4,7 @@ const User = require('../models/User')
 class TokenController {
 
   static tokenToClient(req, res){
-    let data = {
-      token:req.token,
-      fbData: req.response,
-      message:'jwt login succesful'
-    }
+
 
     User.find({email: req.response.email})
       .exec()
@@ -16,7 +12,8 @@ class TokenController {
         if (foundUser) {
           let newUser = new User({
             userName: req.response.name,
-            email: req.response.email
+            email: req.response.email,
+            profile_pic_URL: req.response.picture.data.url
           })
 
           newUser.save((err,createdUser)=>{
@@ -24,6 +21,12 @@ class TokenController {
               return res.status(500).json({
                 message: "User failed to be created"
               })
+            }
+            let data = {
+              token:req.token,
+              fbData: req.response,
+              userData: createdUser,
+              message:'jwt login succesful'
             }
             return res.status(200).send(data)
           })
