@@ -10,6 +10,14 @@ class TokenController {
       .exec()
       .then(foundUser => {
         if (foundUser) {
+          let data = {
+            token:req.token,
+            fbData: req.response,
+            userData: foundUser,
+            message:'jwt login succesful'
+          }
+          return res.status(200).send(data)
+        } else {
           let newUser = new User({
             userName: req.response.name,
             email: req.response.email,
@@ -30,8 +38,6 @@ class TokenController {
             }
             return res.status(200).send(data)
           })
-        } else {
-          return res.status(200).send(data)
         }
       })
       .catch(err => {
