@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var messages = require('./routes/messages');
 var groups = require('./routes/groups')
+var fb_api = require('./routes/fb-api');
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/chat_eleon');
@@ -33,6 +34,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/api/groups',groups)
 app.use('/api/messages', messages);
+// app.use('/api', api);
+app.use('/fb-api', fb_api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,6 +54,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500).json({
     "message": err.message
   });
+
 });
 
 module.exports = app;
