@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   userName: String,
   email: String,
+  profile_pic_URL: String,
   createdAt: {
     type:  Date,
     default: Date.now
